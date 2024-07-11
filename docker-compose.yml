@@ -1,0 +1,73 @@
+version: '3'
+
+services:
+  db:
+    container_name: mysql
+    image: mysql:latest
+    restart: always
+    ports:
+      - "60001:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - database_data:/var/lib/mysql
+    networks:
+      - theerasan-network
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    ports:
+      - "8082:80"
+    environment:
+      PMA_HOST: db 
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    networks:
+      - theerasan-network
+
+  php:
+    container_name: php
+    build:
+      context: .
+      dockerfile: dockerfile-php
+    restart: always
+    volumes:
+      - ./test:/var/www/html
+    networks:
+      - theerasan-network      
+
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./test:/var/www/html
+    depends_on:
+      - php
+    networks:
+      - theerasan-network
+
+  ssh:
+    container_name: ssh
+    image: debian:latest
+    command: ["bash", "-c", "apt-get update && apt-get install -y openssh-server && mkdir -p /var/run/sshd && echo 'root:${SSH_ROOT_PASSWORD}' | chpasswd && sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && /usr/sbin/sshd -D"]
+    restart: always
+    ports:
+      - "65222:22"
+    volumes:
+      - ./test:/var/www/html
+    networks:
+      - theerasan-network
+
+volumes:
+  database_data:
+
+networks:
+  theerasan-network:
+    driver: bridge
