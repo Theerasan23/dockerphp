@@ -20,7 +20,23 @@ $dbname = "test";
 ```bash
 docker compose up -d
 ```
-## 4. create database  test , done
+## 4. create database  test 
+
+### using ssh 
+```bash
+ssh root@localhost -p 65222
+```
+
+### mysql port 
+```bash
+mysql port 60001
+```
+
+### open nginx web server and phpmyadmin
+```bash
+nginx http://localhost:8080/
+phpmyadmin http://localhost:8082/
+```
 
 ## optional , config git | *ไม่จำเป็น
 ```bash
