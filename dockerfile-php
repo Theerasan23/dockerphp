@@ -1,3 +1,29 @@
-FROM php:7.4-fpm
+# ใช้ PHP 8.3 เวอร์ชันล่าสุดพร้อม FPM
+FROM php:8.3-fpm
 
-RUN docker-php-ext-install mysqli
+# ติดตั้ง extension ที่จำเป็น
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    git \
+    curl \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd \
+    && docker-php-ext-install mysqli pdo pdo_mysql
+
+# ติดตั้ง Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# กำหนด Working Directory
+WORKDIR /var/www/html
+
+# คัดลอกไฟล์โปรเจกต์เข้า container (option ถ้าต้องการ)
+# COPY ./test /var/www/html
+
+# ติดตั้ง dotenv
+RUN composer require vlucas/phpdotenv
