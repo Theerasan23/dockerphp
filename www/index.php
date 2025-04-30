@@ -1,17 +1,18 @@
 <?php 
 
-
-require_once __DIR__ . '/../vendor/autoload.php'; // สมมุติ vendor อยู่ที่ root
-
-use Dotenv\Dotenv;
-
-// ชี้ไปที่ root directory ที่เก็บ .env
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->load();
-
-// ใช้งานได้
-$test_env = $_ENV['TEST_ENV_TEXT'];
-
-print("AAAAAAAAAAAAAa")
+    require_once __DIR__ . '/vendor/autoload.php';
+    require_once "controller/connection_secure.php";
+    
+    use Dotenv\Dotenv;
+    $dotenv = Dotenv::createImmutable(__DIR__ . '/');
+    $dotenv->load();
+    $db = new Database();
 
 ?>
+
+<?php require_once "view/header.php";  ?>
+
+<?php require_once "controller/layout.php"; ?>
+
+<?php require_once "view/footer.php"; ?>
+

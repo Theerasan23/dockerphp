@@ -1,0 +1,6 @@
+RewriteEngine On
+
+# ส่งทุก URL ที่ไม่ใช่ไฟล์หรือโฟลเดอร์จริง ไปยัง index.php พร้อมพารามิเตอร์ route
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?route=$1 [L,QSA]
