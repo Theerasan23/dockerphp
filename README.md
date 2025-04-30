@@ -81,7 +81,8 @@ docker compose file  | หากเชื่อมต่อฐานข้อม
 #### ติดตั้ง tailwind
 ติดให้ nodejs ให้แล้วเสร็จก่อนรั้นคำสั่ง
 [https://nodejs.org/en](https://nodejs.org/en)
-รันคำสั่ง
+
+### รันคำสั่ง 
 ```bash
 cd www
 
