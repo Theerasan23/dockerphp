@@ -3,6 +3,8 @@
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $route = trim($uri, '/');
 
+    // ตรวจสอบเส้นทาง ไม่ให้หลุดช่องโหว่ ี url injection 
+    // ซึ่งนำไม่สู่ command injection 
     if (!preg_match('/^[a-zA-Z0-9_-]*$/', $route)) {
         $route = '404';
     }
@@ -11,6 +13,7 @@
         $route = 'home';
     }
 
+    // แนะนำ ไม่ควรตั้งชื่อ path ให้ตรงกับชื่อไฟล์ ป้องกันการค้นหาชื่อไฟล์เพื่อทำการเจาะระบบ
     switch ($route) {
         case 'home':
             require 'page/home.php';
