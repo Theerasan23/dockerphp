@@ -78,6 +78,21 @@ docker compose file  | หากเชื่อมต่อฐานข้อม
 ```bash
 /var/www/html/www/
 ```
+#### ติดตั้ง tailwind
+ติดให้ nodejs ให้แล้วเสร็จก่อนรั้นคำสั่ง
+[https://nodejs.org/en](https://nodejs.org/en)
+รันคำสั่ง
+```bash
+cd www
+
+npm install
+```
+
+### build tailwind 
+### ระบบใช้ tailwindทุกครั้งที่มีการเขียน code ใส่ tailwind class ให้ทำการรันคำสั่งนี้ทุกครั้ง
+```bash
+npm run build
+```
 
 #### ในกรณีที่รันโดยไม่ผ่าน docker ให้ทำการติดตั้ง xamp หรือเครื่องมื่ออื่นในการสร้าง web server และทำการ config ให้ server สามารถใช้ .thaccess ได้
 
